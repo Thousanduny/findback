@@ -9,9 +9,10 @@ ENV RUN_SCRIPTS 1
 ENV REAL_IP_HEADER 1
 
 ENV APP_ENV production
-ENV APP_DEBUG false
+ENV APP_DEBUG true
 ENV LOG_CHANNEL stderr
 
 ENV COMPOSER_ALLOW_SUPERUSER 1
 
-CMD ["/start.sh"]
+# ВАЖНО: Эта команда выполнится при запуске контейнера
+CMD php artisan migrate --seed --force && /start.sh
