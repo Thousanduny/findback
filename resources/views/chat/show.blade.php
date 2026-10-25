@@ -96,13 +96,28 @@
 
                 <!-- Форма отправки -->
                 <div class="p-3 bg-dark border-top border-secondary">
-                    <form action="{{ route('chat', $match->id) }}" method="POST" class="d-flex gap-2">
+                    <form action="{{ route('chat', $match->id) }}" method="POST" class="d-flex gap-2" id="chatForm">
                         @csrf
-                        <input type="text" name="body" class="form-control" placeholder="Напишите сообщение..." required autocomplete="off">
-                        <button type="submit" class="btn btn-custom-orange px-4">Отправить</button>
+                        <input type="text" name="body" class="form-control" placeholder="Напишите сообщение..." required autocomplete="off" id="messageInput">
+                        <button type="submit" class="btn btn-custom-orange px-4" id="sendButton">Отправить</button>
                     </form>
                 </div>
             </div>
         </div>
     </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('chatForm');
+            const sendButton = document.getElementById('sendButton');
+            const messageInput = document.getElementById('messageInput');
+
+            form.addEventListener('submit', function() {
+                // Блокируем кнопку и меняем текст
+                sendButton.disabled = true;
+                sendButton.textContent = 'Отправка...';
+                // Очищаем поле ввода
+                messageInput.value = '';
+            });
+        });
+    </script>
 @endsection

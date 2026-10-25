@@ -37,14 +37,14 @@
                             @if($item->description)
                                 <div class="mb-4">
                                     <h6 class="text-white">Описание:</h6>
-                                    <p class="text-muted">{{ $item->description }}</p>
+                                    <!-- ВОТ ЗДЕСЬ ДОБАВЛЕН text-light -->
+                                    <p class="text-light">{{ $item->description }}</p>
                                 </div>
                             @endif
 
                             <hr class="border-secondary mt-auto">
 
                             <div class="mt-3">
-                                <!-- Ссылка на профиль автора -->
                                 <a href="{{ route('profile.show', $item->user->id) }}" class="text-decoration-none">
                                     <div class="d-flex align-items-center mb-3">
                                         <div class="bg-primary rounded-circle d-flex align-items-center justify-content-center text-white fw-bold me-3" style="width: 50px; height: 50px; font-size: 1.2rem;">
