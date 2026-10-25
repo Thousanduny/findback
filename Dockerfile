@@ -9,6 +9,7 @@ RUN apt-get update && apt-get install -y \
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
 COPY . /var/www/html
+COPY public/favicon.png /var/www/html/public/favicon.png
 WORKDIR /var/www/html
 
 # Удаляем старый кэш конфигурации, если он есть
