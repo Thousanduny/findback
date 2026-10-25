@@ -6,7 +6,7 @@
     <title>FindBack - Бюро находок</title>
 
     <!-- ВОТ НАША ИКОНКА -->
-    <link rel="icon" type="image/png" href="{{ asset('favicon.png') }}?v=2">
+    <link rel="icon" type="image/png" href="https://findback-bpip.onrender.com/favicon.png">
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
