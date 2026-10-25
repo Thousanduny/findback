@@ -20,4 +20,4 @@ RUN chmod -R 777 storage bootstrap/cache
 EXPOSE 8000
 
 # Перед запуском ОБЯЗАТЕЛЬНО чистим кэш конфигурации
-CMD php artisan config:clear && php artisan migrate --force && php artisan db:seed --class=CategorySeeder --force && php artisan db:seed --class=LocationSeeder --force && php artisan serve --host=0.0.0.0 --port=10000
+CMD php artisan storage:link && php artisan config:clear && php artisan migrate --force && php artisan db:seed --class=CategorySeeder --force && php artisan db:seed --class=LocationSeeder --force && php artisan serve --host=0.0.0.0 --port=10000
