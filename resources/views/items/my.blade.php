@@ -12,7 +12,6 @@
                 <div class="alert alert-danger">{{ session('error') }}</div>
             @endif
 
-            <!-- Вкладки и Поиск -->
             <div class="card mb-4 p-4">
                 <ul class="nav nav-pills mb-4">
                     <li class="nav-item">
@@ -52,7 +51,6 @@
                 </form>
             </div>
 
-            <!-- Список -->
             @if($items->isEmpty())
                 <div class="alert alert-secondary">Объявлений не найдено.</div>
             @else
@@ -61,10 +59,9 @@
                         <div class="col-md-4 mb-3">
                             <div class="card h-100 d-flex flex-column {{ $item->status === 'returned' ? 'opacity-75' : '' }}">
 
-                                <!-- ССЫЛКА НА ПРОСМОТР -->
                                 <a href="{{ route('items.show', $item->id) }}" class="text-decoration-none">
                                     @if($item->photo)
-                                        <img src="{{ asset('storage/' . $item->photo) }}" class="card-img-top" alt="Фото" style="height: 200px; object-fit: cover; border-top-left-radius: 12px; border-top-right-radius: 12px;">
+                                        <img src="{{ $item->photo }}" class="card-img-top" alt="Фото" style="height: 200px; object-fit: cover; border-top-left-radius: 12px; border-top-right-radius: 12px;">
                                     @endif
 
                                     <div class="p-3">
@@ -89,7 +86,6 @@
                                     </div>
                                 </a>
 
-                                <!-- Кнопки управления (вне ссылки) -->
                                 <div class="px-3 pb-3 mt-auto">
                                     @if($item->status === 'active')
                                         <div class="d-flex gap-2">

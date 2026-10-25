@@ -8,11 +8,10 @@
             @endif
 
             <div class="card p-4">
-                <!-- Шапка профиля -->
                 <div class="d-flex align-items-center justify-content-between mb-4">
                     <div class="d-flex align-items-center">
                         @if($user->avatar)
-                            <img src="{{ asset('storage/' . $user->avatar) }}" class="rounded-circle me-3" style="width: 80px; height: 80px; object-fit: cover;">
+                            <img src="{{ $user->avatar }}" class="rounded-circle me-3" style="width: 80px; height: 80px; object-fit: cover;">
                         @else
                             <div class="bg-primary rounded-circle d-flex align-items-center justify-content-center text-white fw-bold me-3" style="width: 80px; height: 80px; font-size: 2rem;">
                                 {{ mb_substr($user->name, 0, 1) }}
@@ -29,7 +28,6 @@
                     </button>
                 </div>
 
-                <!-- Статистика -->
                 <h5 class="text-white mb-3">Статистика</h5>
                 <div class="row text-center mb-4">
                     <div class="col-6 col-md-3 mb-2">
@@ -81,7 +79,6 @@
         </div>
     </div>
 
-    <!-- Модальное окно для редактирования профиля -->
     <div class="modal fade" id="editProfileModal" tabindex="-1" aria-labelledby="editProfileModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content" style="background-color: #1F2937; border: 1px solid #374151;">
@@ -93,7 +90,6 @@
                     @csrf
                     @method('PUT')
                     <div class="modal-body">
-                        <!-- БЛОК ВЫВОДА ОШИБОК -->
                         @if($errors->any())
                             <div class="alert alert-danger">
                                 <ul class="mb-0">

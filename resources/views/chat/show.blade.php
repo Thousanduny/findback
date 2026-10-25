@@ -6,12 +6,10 @@
             <a href="{{ route('chats.index') }}" class="btn btn-outline-secondary mb-3">← Ко всем чатам</a>
 
             <div class="card overflow-hidden">
-                <!-- Шапка чата -->
                 <div class="bg-dark p-3 border-bottom border-secondary d-flex justify-content-between align-items-center">
                     <div class="d-flex align-items-center">
-                        <!-- Аватарка собеседника -->
                         @if($opponent && $opponent->avatar)
-                            <img src="{{ asset('storage/' . $opponent->avatar) }}" class="rounded-circle me-3" style="width: 40px; height: 40px; object-fit: cover;">
+                            <img src="{{ $opponent->avatar }}" class="rounded-circle me-3" style="width: 40px; height: 40px; object-fit: cover;">
                         @else
                             <div class="bg-primary rounded-circle d-flex align-items-center justify-content-center text-white fw-bold me-3" style="width: 40px; height: 40px; font-size: 1rem;">
                                 {{ mb_substr($opponent->name ?? '?', 0, 1) }}
@@ -38,7 +36,6 @@
                             @if($foundItem) <span class="badge bg-success d-block">Найдено: {{ $foundItem->title }}</span> @endif
                         </div>
 
-                        <!-- Кнопка удаления -->
                         <form action="{{ route('chat.destroy', $match->id) }}" method="POST" onsubmit="return confirm('Вы уверены, что хотите удалить этот чат? Все сообщения будут потеряны.');">
                             @csrf
                             @method('DELETE')
@@ -49,7 +46,6 @@
                     </div>
                 </div>
 
-                <!-- Окно сообщений -->
                 <div class="p-4" style="height: 400px; overflow-y: auto; background-color: #111827;">
                     @if($messages->isEmpty())
                         <div class="text-center text-muted mt-5">
@@ -65,7 +61,7 @@
                             <div class="d-flex mb-3 {{ $isMine ? 'justify-content-end' : 'justify-content-start' }}">
                                 @if(!$isMine)
                                     @if($sender && $sender->avatar)
-                                        <img src="{{ asset('storage/' . $sender->avatar) }}" class="rounded-circle me-2" style="width: 35px; height: 35px; object-fit: cover;">
+                                        <img src="{{ $sender->avatar }}" class="rounded-circle me-2" style="width: 35px; height: 35px; object-fit: cover;">
                                     @else
                                         <div class="bg-primary rounded-circle d-flex align-items-center justify-content-center text-white fw-bold me-2" style="width: 35px; height: 35px; font-size: 0.9rem;">
                                             {{ mb_substr($sender->name ?? '?', 0, 1) }}
@@ -82,7 +78,7 @@
 
                                 @if($isMine)
                                     @if($sender && $sender->avatar)
-                                        <img src="{{ asset('storage/' . $sender->avatar) }}" class="rounded-circle ms-2" style="width: 35px; height: 35px; object-fit: cover;">
+                                        <img src="{{ $sender->avatar }}" class="rounded-circle ms-2" style="width: 35px; height: 35px; object-fit: cover;">
                                     @else
                                         <div class="bg-primary rounded-circle d-flex align-items-center justify-content-center text-white fw-bold ms-2" style="width: 35px; height: 35px; font-size: 0.9rem;">
                                             {{ mb_substr($sender->name ?? '?', 0, 1) }}
@@ -94,7 +90,6 @@
                     @endif
                 </div>
 
-                <!-- Форма отправки -->
                 <div class="p-3 bg-dark border-top border-secondary">
                     <form action="{{ route('chat', $match->id) }}" method="POST" class="d-flex gap-2" id="chatForm">
                         @csrf
@@ -112,10 +107,8 @@
             const messageInput = document.getElementById('messageInput');
 
             form.addEventListener('submit', function() {
-                // Блокируем кнопку и меняем текст
                 sendButton.disabled = true;
                 sendButton.textContent = 'Отправка...';
-                // Очищаем поле ввода
                 messageInput.value = '';
             });
         });

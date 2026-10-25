@@ -9,7 +9,7 @@
                 <div class="row g-0">
                     <div class="col-md-5">
                         @if($item->photo)
-                            <img src="{{ asset('storage/' . $item->photo) }}" class="img-fluid h-100 w-100" alt="Фото" style="object-fit: cover; min-height: 300px;">
+                            <img src="{{ $item->photo }}" class="img-fluid h-100 w-100" alt="Фото" style="object-fit: cover; min-height: 300px;">
                         @else
                             <div class="bg-secondary d-flex align-items-center justify-content-center h-100" style="min-height: 300px;">
                                 <span class="text-muted fs-4">Нет фотографии</span>
@@ -37,7 +37,6 @@
                             @if($item->description)
                                 <div class="mb-4">
                                     <h6 class="text-white">Описание:</h6>
-                                    <!-- ВОТ ЗДЕСЬ ДОБАВЛЕН text-light -->
                                     <p class="text-light">{{ $item->description }}</p>
                                 </div>
                             @endif

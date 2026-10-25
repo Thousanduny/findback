@@ -9,7 +9,7 @@ use App\Models\Location;
 use App\Models\ItemMatch;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\Storage;
+use Cloudinary\Cloudinary;
 
 class ItemController extends Controller
 {
@@ -36,7 +36,15 @@ class ItemController extends Controller
 
         $photoPath = null;
         if ($request->hasFile('photo')) {
-            $photoPath = $request->file('photo')->store('photos', 'public');
+            $cloudinary = new Cloudinary([
+                'cloud' => [
+                    'cloud_name' => 'vjoiaqxc',
+                    'api_key'    => '733256525395747',
+                    'api_secret' => '5vukJ1F7yFh42E1wRxpKnQHbpNE',
+                ],
+            ]);
+            $uploadedFileUrl = $cloudinary->uploadApi()->upload($request->file('photo')->getRealPath())['secure_url'];
+            $photoPath = $uploadedFileUrl;
         }
 
         $location = Location::create([
@@ -117,8 +125,15 @@ class ItemController extends Controller
 
         $photoPath = $item->photo;
         if ($request->hasFile('photo')) {
-            if ($item->photo) Storage::disk('public')->delete($item->photo);
-            $photoPath = $request->file('photo')->store('photos', 'public');
+            $cloudinary = new Cloudinary([
+                'cloud' => [
+                    'cloud_name' => 'vjoiaqxc',
+                    'api_key'    => '733256525395747',
+                    'api_secret' => '5vukJ1F7yFh42E1wRxpKnQHbpNE',
+                ],
+            ]);
+            $uploadedFileUrl = $cloudinary->uploadApi()->upload($request->file('photo')->getRealPath())['secure_url'];
+            $photoPath = $uploadedFileUrl;
         }
 
         $item->location->update([
@@ -160,14 +175,12 @@ class ItemController extends Controller
         return redirect()->route('items.my')->with('success', 'Вещь возвращена! +10 баллов к рейтингу.');
     }
 
-    // ОБНОВЛЕННЫЙ МЕТОД
     public function startChat(Item $item)
     {
         if (Auth::id() === $item->user_id) {
             return redirect()->back()->with('error', 'Нельзя связаться с самим собой.');
         }
 
-        // Ищем существующий чат между этими двумя пользователями по этому объявлению
         $existingMatch = ItemMatch::where(function($query) use ($item) {
             $query->whereHas('lostItem', function($q) use ($item) {
                 $q->where('user_id', $item->user_id);
@@ -187,7 +200,6 @@ class ItemController extends Controller
             return redirect()->route('chat', $existingMatch->id);
         }
 
-        // Создаем новый чат и записываем, кто его инициировал
         if ($item->type === 'lost') {
             $match = ItemMatch::create([
                 'lost_item_id' => $item->id,

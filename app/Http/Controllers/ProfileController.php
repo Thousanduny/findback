@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Item;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Storage;
+use Cloudinary\Cloudinary;
 
 class ProfileController extends Controller
 {
@@ -36,14 +36,17 @@ class ProfileController extends Controller
             'name' => $request->name,
         ];
 
-        // Обработка загрузки аватарки
+        // Обработка загрузки аватарки в Cloudinary
         if ($request->hasFile('avatar')) {
-            // Если старая аватарка есть, удаляем её
-            if ($user->avatar) {
-                Storage::disk('public')->delete($user->avatar);
-            }
-            // Сохраняем новую в папку avatars
-            $data['avatar'] = $request->file('avatar')->store('avatars', 'public');
+            $cloudinary = new Cloudinary([
+                'cloud' => [
+                    'cloud_name' => 'vjoiaqxc',
+                    'api_key'    => '733256525395747',
+                    'api_secret' => '5vukJ1F7yFh42E1wRxpKnQHbpNE',
+                ],
+            ]);
+            $uploadedFileUrl = $cloudinary->uploadApi()->upload($request->file('avatar')->getRealPath())['secure_url'];
+            $data['avatar'] = $uploadedFileUrl;
         }
 
         $user->update($data);

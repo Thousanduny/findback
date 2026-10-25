@@ -1,7 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-    <!-- Баннер -->
     <div class="hero-graphite text-center mb-5">
         <h1 class="display-4 fw-bold text-white">Потеряй. Найди. Верни.</h1>
         <p class="lead text-light mt-3 mb-5">
@@ -13,7 +12,6 @@
         </div>
     </div>
 
-    <!-- Вкладки и Поиск -->
     <div class="card mb-4 p-4">
         <ul class="nav nav-pills mb-4">
             <li class="nav-item">
@@ -53,7 +51,6 @@
         </form>
     </div>
 
-    <!-- Лента объявлений -->
     <div class="row mb-5">
         <div class="col-12">
             @if($items->isEmpty())
@@ -65,7 +62,7 @@
                             <a href="{{ route('items.show', $item->id) }}" class="text-decoration-none">
                                 <div class="card h-100">
                                     @if($item->photo)
-                                        <img src="{{ asset('storage/' . $item->photo) }}" class="card-img-top" alt="Фото" style="height: 180px; object-fit: cover; border-top-left-radius: 12px; border-top-right-radius: 12px;">
+                                        <img src="{{ $item->photo }}" class="card-img-top" alt="Фото" style="height: 180px; object-fit: cover; border-top-left-radius: 12px; border-top-right-radius: 12px;">
                                     @else
                                         <div class="bg-secondary d-flex align-items-center justify-content-center" style="height: 180px; border-top-left-radius: 12px; border-top-right-radius: 12px;">
                                             <span class="text-muted">Нет фото</span>
@@ -73,24 +70,17 @@
                                     @endif
 
                                     <div class="p-3">
-                                        <!-- Название вещи и статус -->
                                         <div class="d-flex justify-content-between align-items-start mb-2">
                                             <h6 class="text-white mb-0">{{ $item->title }}</h6>
                                             <span class="badge {{ $item->type === 'lost' ? 'bg-danger' : 'bg-success' }} ms-2">
                                                 {{ $item->type === 'lost' ? 'Потеряно' : 'Найдено' }}
                                             </span>
                                         </div>
-
-                                        <!-- Категория -->
                                         <small class="text-muted d-block mb-2">{{ $item->category->name }}</small>
-
-                                        <!-- Блок с автором (имя сверху, рейтинг снизу) -->
                                         <div class="d-flex flex-column mb-2">
                                             <small class="text-light fw-bold">{{ $item->user->name }}</small>
                                             <x-rating-badge :rating="$item->user->rating" />
                                         </div>
-
-                                        <!-- Локация -->
                                         <small class="text-secondary">{{ $item->location->city }}, {{ $item->location->street }}</small>
                                     </div>
                                 </div>

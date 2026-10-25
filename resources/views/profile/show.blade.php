@@ -8,7 +8,7 @@
             <div class="card p-4">
                 <div class="d-flex align-items-center mb-4">
                     @if($user->avatar)
-                        <img src="{{ asset('storage/' . $user->avatar) }}" class="rounded-circle me-3" style="width: 80px; height: 80px; object-fit: cover;">
+                        <img src="{{ $user->avatar }}" class="rounded-circle me-3" style="width: 80px; height: 80px; object-fit: cover;">
                     @else
                         <div class="bg-primary rounded-circle d-flex align-items-center justify-content-center text-white fw-bold me-3" style="width: 80px; height: 80px; font-size: 2rem;">
                             {{ mb_substr($user->name, 0, 1) }}
@@ -20,7 +20,6 @@
                     </div>
                 </div>
 
-                <!-- Статистика с подписями -->
                 <h5 class="text-white mb-3">Статистика</h5>
                 <div class="row text-center mb-4">
                     <div class="col-6 col-md-3 mb-2">
