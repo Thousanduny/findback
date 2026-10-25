@@ -63,17 +63,16 @@ return [
 
         'pgsql' => [
             'driver' => 'pgsql',
-            'url' => env('DATABASE_URL'),
-            'host' => env('DB_HOST', '127.0.0.1'),
-            'port' => env('DB_PORT', '5432'),
-            'database' => env('DB_DATABASE', 'forge'),
-            'username' => env('DB_USERNAME', 'forge'),
-            'password' => env('DB_PASSWORD', ''),
-            'charset' => env('DB_CHARSET', 'utf8'),
+            'host' => 'dpg-dbeqtpgae00c73e24c8g-a.frankfurt-postgres.render.com',
+            'port' => '5432',
+            'database' => 'findback_db_ttll',
+            'username' => 'findback_db_ttll_user',
+            'password' => 'rBCPezsTfWByns5EtK1x5wyya1EqI1vX',
+            'charset' => 'utf8',
             'prefix' => '',
             'prefix_indexes' => true,
             'search_path' => 'public',
-            'sslmode' => 'prefer',
+            'sslmode' => 'require',
         ],
 
         'sqlsrv' => [
