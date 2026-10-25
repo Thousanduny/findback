@@ -1,15 +1,28 @@
-FROM richarvey/nginx-php-fpm:php8.4
+# Берем официальный образ PHP 8.4 с установленным Composer
+FROM php:8.4-cli
 
-COPY . .
+# Устанавливаем системные зависимости (нужны для Laravel)
+RUN apt-get update && apt-get install -y \
+    git \
+    unzip \
+    libpq-dev \
+    && docker-php-ext-install pdo pdo_pgsql
 
-ENV COMPOSER_ALLOW_SUPERUSER 1
-ENV WEBROOT /var/www/html/public
-ENV PHP_ERRORS_STDERR 1
-ENV RUN_SCRIPTS 1
-ENV REAL_IP_HEADER 1
+# Копируем Composer из официального образа
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-ENV APP_ENV production
-ENV APP_DEBUG true
-ENV LOG_CHANNEL stderr
+# Копируем проект
+COPY . /var/www/html
+WORKDIR /var/www/html
 
-CMD composer install --no-dev --optimize-autoloader && php artisan migrate --seed --force && /start.sh
+# Устанавливаем зависимости Laravel
+RUN composer install --no-dev --optimize-autoloader
+
+# Делаем папки storage и cache доступными для записи
+RUN chmod -R 777 storage bootstrap/cache
+
+# Открываем порт (Render сам подставит нужный)
+EXPOSE 8000
+
+# Запускаем миграции и встроенный сервер PHP
+CMD php artisan migrate --seed --force && php artisan serve --host=0.0.0.0 --port=8000
